@@ -8,30 +8,23 @@ import {
 
 export class AddContactForm extends Component {
   state = {
-    contact: { inputName: '', inputNumber: '' },
+    name: '',
+    number: '',
   };
 
   onChange = evt => {
-    this.setState(prevState => {
-      if (evt.target.name === 'name') {
-        return {
-          contact: { ...prevState.contact, inputName: evt.target.value },
-        };
-      } else if (evt.target.name === 'phone_number') {
-        return {
-          contact: { ...prevState.contact, inputNumber: evt.target.value },
-        };
-      }
-    });
+    const { name, value } = evt.target;
+
+    this.setState({ [name]: value });
   };
 
   onSubmit = evt => {
-    const { onAddContact } = this.props;
-    const { contact } = this.state;
+    const { state, props } = this;
+    const { onAddContact } = props;
 
     evt.preventDefault();
 
-    const isIncludesName = onAddContact(contact);
+    const isIncludesName = onAddContact(state);
 
     if (isIncludesName === null) {
       return;
@@ -60,7 +53,7 @@ export class AddContactForm extends Component {
           Number
           <ContactInput
             type="tel"
-            name="phone_number"
+            name="number"
             onChange={this.onChange}
             placeholder="000-00-00"
             pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"

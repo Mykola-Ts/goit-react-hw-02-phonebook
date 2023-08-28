@@ -15,21 +15,21 @@ export class App extends Component {
     filter: '',
   };
 
-  onAddContact = ({ inputName, inputNumber }) => {
+  onAddContact = ({ name, number }) => {
     const { contacts } = this.state;
     const isIncludesName = contacts.find(
-      ({ name }) => name.toLowerCase() === inputName.toLowerCase()
+      contact => contact.name.toLowerCase() === name.toLowerCase()
     );
     const isIncludesNumber = contacts.find(
-      ({ number }) => number === inputNumber
+      contact => contact.number === number
     );
 
     if (isIncludesName) {
-      alert(`${inputName} is already in contacts`);
+      alert(`${name} is already in contacts`);
 
       return null;
     } else if (isIncludesNumber) {
-      alert(`Number ${inputNumber} is already in contacts`);
+      alert(`Number ${number} is already in contacts`);
 
       return null;
     }
@@ -39,13 +39,13 @@ export class App extends Component {
         ...prevState.contacts,
         {
           id: nanoid(),
-          name: inputName,
-          number: inputNumber,
+          name,
+          number,
         },
       ],
     }));
 
-    Notify.success(`${inputName} added to contacts`);
+    Notify.success(`${name} added to contacts`);
   };
 
   onDeleteContact = contactId => {
