@@ -1,35 +1,20 @@
 import PropTypes from 'prop-types';
-import { ContactList } from 'components/ContactList/ContactList';
-import { Filter } from 'components/Filter/Filter';
-import { NoContactsText } from './Contacts.styled';
+import { Contact } from 'components/Contact/Contact';
+import { ListItem } from './Contacts.styled';
 
-export const Contacts = ({
-  contacts,
-  visibleContacts,
-  onDelete,
-  onFilterContacts,
-}) => {
+export const ContactList = ({ contacts, onDelete }) => {
   return (
-    <>
-      {!contacts.length && <NoContactsText>No contacts</NoContactsText>}
-      {contacts.length > 0 && (
-        <>
-          <Filter onFilterContacts={onFilterContacts} />
-          <ContactList contacts={visibleContacts} onDelete={onDelete} />
-          {!visibleContacts.length && (
-            <NoContactsText>
-              No contacts found for the entered name
-            </NoContactsText>
-          )}
-        </>
-      )}
-    </>
+    <ul>
+      {contacts.map(({ id, name, number }) => (
+        <ListItem key={id}>
+          <Contact id={id} name={name} number={number} onDelete={onDelete} />
+        </ListItem>
+      ))}
+    </ul>
   );
 };
 
-Contacts.propTypes = {
+ContactList.propTypes = {
   contacts: PropTypes.array.isRequired,
-  visibleContacts: PropTypes.array.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onFilterContacts: PropTypes.func.isRequired,
 };

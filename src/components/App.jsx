@@ -4,8 +4,10 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Layout } from './Layout';
 import { GlobalStyle } from './GlobalStyle';
 import { Section } from './Section/Section';
-import { Contacts } from './Contacts/Contacts';
 import { AddContactForm } from './AddContactForm/AddContactForm';
+import { Filter } from './Filter/Filter';
+import { ContactList } from './Contacts/Contacts';
+import { NoContactsText } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -13,13 +15,8 @@ export class App extends Component {
     filter: '',
   };
 
-  onAddContact = evt => {
+  onAddContact = ({ inputName, inputNumber }) => {
     const { contacts } = this.state;
-
-    evt.preventDefault();
-
-    const inputName = evt.target.name.value;
-    const inputNumber = evt.target.phone_number.value;
     const isIncludesName = contacts.find(
       ({ name }) => name.toLowerCase() === inputName.toLowerCase()
     );
@@ -30,26 +27,25 @@ export class App extends Component {
     if (isIncludesName) {
       alert(`${inputName} is already in contacts`);
 
-      return;
+      return null;
     } else if (isIncludesNumber) {
       alert(`Number ${inputNumber} is already in contacts`);
 
-      return;
+      return null;
     }
 
-    const newContact = {
-      id: nanoid(),
-      name: inputName,
-      number: inputNumber,
-    };
-
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact],
+      contacts: [
+        ...prevState.contacts,
+        {
+          id: nanoid(),
+          name: inputName,
+          number: inputNumber,
+        },
+      ],
     }));
 
     Notify.success(`${inputName} added to contacts`);
-
-    evt.target.reset();
   };
 
   onDeleteContact = contactId => {
@@ -66,7 +62,7 @@ export class App extends Component {
     const { state, onAddContact, onDeleteContact, onFilterContacts } = this;
     const { contacts, filter } = state;
     const visibleContacts = contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(filter.toLowerCase())
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
 
     return (
@@ -76,13 +72,22 @@ export class App extends Component {
         </Section>
 
         <Section title="Contacts">
-          <Contacts
-            contacts={contacts}
-            visibleContacts={visibleContacts}
-            onDelete={onDeleteContact}
-            onFilterContacts={onFilterContacts}
-            id="contacts"
-          />
+          {contacts.length > 0 ? (
+            <>
+              <Filter onFilterContacts={onFilterContacts} />
+              <ContactList
+                contacts={visibleContacts}
+                onDelete={onDeleteContact}
+              />
+              {!visibleContacts.length && (
+                <NoContactsText>
+                  No contacts found for the entered name
+                </NoContactsText>
+              )}
+            </>
+          ) : (
+            <NoContactsText>No contacts</NoContactsText>
+          )}
         </Section>
 
         <GlobalStyle />
