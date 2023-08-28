@@ -19,10 +19,15 @@ export const ContactInput = styled.input`
   padding: 8px 16px;
   margin-top: 8px;
 
-  outline: transparent;
+  outline: 1px solid transparent;
+
+  transition: border-color var(--transition-duration)
+      var(--transition-timing-function),
+    outline-color var(--transition-duration) var(--transition-timing-function);
 
   &:focus {
-    border-color: var(--blue-color);
+    border-color: transparent;
+    outline-color: var(--blue-color);
   }
 `;
 
@@ -34,11 +39,11 @@ gap: 8px;
 
 min-width: 140px;
 border-radius: 18px;
-border: 2px solid var(--green-color);
+border: 2px solid var(--blue-color);
 padding: 8px 16px;
 margin: 0 auto;
 
-color: var(--green-color);
+color: var(--blue-color);
 background-color: transparent;
 
 transition: color var(--transition-duration)
@@ -47,6 +52,5 @@ var(--transition-timing-function);
 
 &:is(:hover, :focus, :active) {
 color: var(--white-color);
-background-color: var(--green-color);
-border-color: var(--green-color);
+background-color: var(--blue-color);
 `;

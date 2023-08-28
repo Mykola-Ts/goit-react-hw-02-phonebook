@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { MdDelete } from 'react-icons/md';
+import { GoTrash } from 'react-icons/go';
 import { Button, ContactInfo, ContactNumber } from './Contact.styled';
 
 export const Contact = ({ id, name, number, onDelete }) => {
@@ -8,8 +8,12 @@ export const Contact = ({ id, name, number, onDelete }) => {
       <ContactInfo>{`${name}: `}</ContactInfo>
       <ContactNumber>{number}</ContactNumber>
 
-      <Button type="button" onClick={evt => onDelete(evt.currentTarget.id)} id={id}>
-        <MdDelete size={20} />
+      <Button
+        type="button"
+        onClick={evt => onDelete(evt.currentTarget.id)}
+        id={id}
+      >
+        <GoTrash size={20} />
         <p>Delete</p>
       </Button>
     </>

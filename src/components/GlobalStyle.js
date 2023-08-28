@@ -53,8 +53,7 @@ export const GlobalStyle = createGlobalStyle`
   --text-black-color: #111;
   --white-color: #fff;
   --red-color: #ff0000;
-  --green-color: #008000;
-  --blue-color: #0000ff;
+  --blue-color: #5050fb;
 
   --box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08),
   0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);

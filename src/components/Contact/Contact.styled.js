@@ -14,11 +14,11 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
 
   border-radius: 18px;
   border: 1px solid var(--text-black-color);
-  padding: 4px 12px;
+  padding: 8px 12px;
 
   color: currentColor;
   background-color: transparent;
